@@ -6,9 +6,10 @@ import { Badge } from "@/components/ui/badge";
 interface RiskCardProps {
   risk: RiskItem;
   index: number;
+  onClick?: () => void;
 }
 
-const RiskCard = ({ risk, index }: RiskCardProps) => {
+const RiskCard = ({ risk, index, onClick }: RiskCardProps) => {
   const severityColorClass = getSeverityColor(risk.severity);
 
   return (
@@ -17,7 +18,10 @@ const RiskCard = ({ risk, index }: RiskCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
     >
-      <Card className="group relative overflow-hidden p-6 transition-all hover:shadow-elevated">
+      <Card 
+        className="group relative overflow-hidden p-6 transition-all hover:shadow-elevated cursor-pointer"
+        onClick={onClick}
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2">
@@ -30,6 +34,9 @@ const RiskCard = ({ risk, index }: RiskCardProps) => {
               {risk.title}
             </h4>
             <p className="text-sm text-muted-foreground">{risk.description}</p>
+            <p className="mt-2 text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              Click for details →
+            </p>
           </div>
           
           <div className="flex flex-col items-end gap-2">

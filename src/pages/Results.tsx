@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpDown, Download, Info } from "lucide-react";
 import { riskCategories, RiskItem } from "@/data/riskData";
 import RiskCard from "@/components/RiskCard";
+import RiskDetailModal from "@/components/RiskDetailModal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -15,6 +16,8 @@ const Results = () => {
   const selectedCategories = location.state?.selectedCategories || "all";
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   const [allRisks, setAllRisks] = useState<RiskItem[]>([]);
+  const [selectedRisk, setSelectedRisk] = useState<RiskItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!location.state) {
@@ -73,6 +76,16 @@ const Results = () => {
 
   const avgScore = Math.round(allRisks.reduce((sum, risk) => sum + risk.score, 0) / allRisks.length);
   const highRisks = allRisks.filter((r) => r.score >= 75).length;
+
+  const handleRiskClick = (risk: RiskItem) => {
+    setSelectedRisk(risk);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedRisk(null), 300);
+  };
 
   return (
     <div className="container py-12">
@@ -153,12 +166,24 @@ const Results = () => {
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 {risks.map((risk, index) => (
-                  <RiskCard key={risk.id} risk={risk} index={index} />
+                  <RiskCard 
+                    key={risk.id} 
+                    risk={risk} 
+                    index={index} 
+                    onClick={() => handleRiskClick(risk)}
+                  />
                 ))}
               </div>
             </div>
           ))}
         </div>
+
+        <RiskDetailModal
+          risk={selectedRisk}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          allRisks={allRisks}
+        />
       </motion.div>
     </div>
   );
