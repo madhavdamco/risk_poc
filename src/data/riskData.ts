@@ -29,296 +29,450 @@ export interface RiskCategory {
 
 export const riskCategories: RiskCategory[] = [
   {
-    id: "cyber",
-    name: "Cyber",
-    icon: "Shield",
-    dataSources: [
-      { name: "CISA Alerts", url: "https://www.cisa.gov/news-events/cybersecurity-advisories" },
-      { name: "NIST Cybersecurity Framework", url: "https://www.nist.gov/cyberframework" },
-      { name: "Recorded Future", url: "https://www.recordedfuture.com/" },
+    "id": "cyber",
+    "name": "Cyber",
+    "icon": "Shield",
+    "dataSources": [
+      { "name": "AlienVault OTX", "url": "https://otx.alienvault.com/" },
+      { "name": "CISA Advisories", "url": "https://www.cisa.gov/news-events/cybersecurity-advisories" },
+      { "name": "NVD (CVE)", "url": "https://nvd.nist.gov/" }
     ],
-    risks: [
+    "risks": [
       {
-        id: "CYB-001",
-        title: "Ransomware Spike",
-        score: 82,
-        severity: "High",
-        description: "Increased ransomware activity across APAC.",
-        category: "cyber",
-        detailedDescription: "A significant uptick in ransomware attacks has been detected across the Asia-Pacific region, with threat actors targeting critical infrastructure, healthcare, and financial services. Multiple variants including LockBit 3.0 and BlackCat have been observed in recent campaigns. Organizations without adequate backup systems and incident response plans face elevated risk of operational disruption.",
-        recommendedActions: [
-          "Implement comprehensive offline backup strategy with 3-2-1 rule",
-          "Deploy endpoint detection and response (EDR) solutions across all systems",
-          "Conduct organization-wide security awareness training on ransomware indicators",
-          "Review and test incident response playbooks quarterly",
-          "Enable multi-factor authentication for all remote access points"
+        "id": "CYB-001",
+        "title": "Ransomware Activity Targeting MEA Logistics & Vendors",
+        "score": 85,
+        "severity": "High",
+        "description": "Ransomware campaigns and IOCs observed that target logistics providers and vendor portals in the Middle East and Africa.",
+        "category": "cyber",
+        "detailedDescription": "Threat feeds show rising ransomware activity (targeting supply-chain services and regional logistics vendors). Compromise of a logistics partner could disrupt Redington's deliveries and create downstream operational outages or data exposure.",
+        "recommendedActions": [
+          "Verify EDR is deployed on vendor-facing systems",
+          "Require MDR/monitoring for critical vendors",
+          "Run tabletop exercises with logistics & ops teams",
+          "Enforce multi-factor authentication for vendor portals"
         ],
-        relatedRisks: ["CYB-002", "CYB-003"],
-        impact: "Critical - Potential for complete operational shutdown and data loss",
-        likelihood: "High - Active campaigns targeting similar organizations",
-        timeframe: "Immediate - Within 30 days",
-        lastUpdated: "2025-11-24"
+        "relatedRisks": ["CYB-002", "SC-PoC-001"],
+        "impact": "High – Operational disruption and potential data loss affecting distribution.",
+        "likelihood": "Medium-High",
+        "timeframe": "Immediate – 30 days",
+        "lastUpdated": "2025-11-27"
       },
       {
-        id: "CYB-002",
-        title: "Zero-Day Exploits",
-        score: 75,
-        severity: "Medium-High",
-        description: "Active exploitation trend observed.",
-        category: "cyber",
-        detailedDescription: "Intelligence sources report active exploitation of previously unknown vulnerabilities in widely-used enterprise software. Threat actors are leveraging these zero-day exploits before patches become available, creating windows of vulnerability. Affected systems include VPN appliances, collaboration tools, and network management software.",
-        recommendedActions: [
-          "Subscribe to threat intelligence feeds for early warning",
-          "Implement network segmentation to limit lateral movement",
-          "Deploy virtual patching through Web Application Firewalls",
-          "Establish emergency patch management procedures",
-          "Monitor for suspicious outbound connections and data exfiltration"
+        "id": "CYB-002",
+        "title": "Critical CVE Affecting Popular Server/Networking Firmware",
+        "score": 78,
+        "severity": "Medium-High",
+        "description": "New high-severity CVEs published that impact firmware/management interfaces used by vendors.",
+        "category": "cyber",
+        "detailedDescription": "NVD/CISA advisory items report vulnerabilities in widely deployed enterprise server and networking firmware. These pose a supply-chain risk if OEMs recall affected SKUs or delay shipments pending patches.",
+        "recommendedActions": [
+          "Track CVEs for SKUs in distribution catalogue",
+          "Hold vendor readiness calls for patch schedules",
+          "Temporarily quarantine affected SKUs in inventory if advised"
         ],
-        relatedRisks: ["CYB-001", "OPS-501"],
-        impact: "High - Unauthorized access and potential data breach",
-        likelihood: "Medium-High - Active exploitation in the wild",
-        timeframe: "Near-term - Within 60 days",
-        lastUpdated: "2025-11-23"
+        "relatedRisks": ["CYB-001", "SC-PoC-008"],
+        "impact": "High – Security exposure and potential vendor remediation affecting stock flow.",
+        "likelihood": "Medium",
+        "timeframe": "Near-term – 30–60 days",
+        "lastUpdated": "2025-11-26"
       },
       {
-        id: "CYB-003",
-        title: "Phishing Exposure",
-        score: 61,
-        severity: "Medium",
-        description: "High click-rate in phishing simulations.",
-        category: "cyber",
-        detailedDescription: "Internal phishing simulations reveal concerning click-through rates on malicious links and attachments. Employees across multiple departments demonstrated susceptibility to social engineering tactics, particularly spear-phishing campaigns that impersonate executives or trusted vendors. This exposure creates pathways for credential theft and malware deployment.",
-        recommendedActions: [
-          "Launch targeted security awareness campaign with role-based training",
-          "Implement email filtering with advanced threat protection",
-          "Deploy browser isolation technology for suspicious links",
-          "Establish clear reporting procedures for suspicious emails",
-          "Conduct monthly micro-training sessions and simulated phishing tests"
+        "id": "CYB-003",
+        "title": "Phishing Campaigns Targeting Distributor Finance Teams",
+        "score": 62,
+        "severity": "Medium",
+        "description": "Targeted credential harvesting / invoice fraud attempts seen in regional feeds.",
+        "category": "cyber",
+        "detailedDescription": "Abuse and OTX indicators show phishing campaigns impersonating suppliers and finance contacts to capture payments or credentials. These increase risk of fraudulent payments and vendor-account takeovers.",
+        "recommendedActions": [
+          "Tighten payment approval workflows",
+          "Educate finance teams on vendor impersonation signs",
+          "Use payable verification (two-person check) for high-value transfers"
         ],
-        relatedRisks: ["CYB-001", "FIN-402"],
-        impact: "Medium - Credential compromise and potential account takeover",
-        likelihood: "High - Ongoing phishing campaigns targeting industry",
-        timeframe: "Ongoing - Continuous exposure",
-        lastUpdated: "2025-11-25"
-      },
-    ],
+        "relatedRisks": ["FIN-401"],
+        "impact": "Medium – Financial loss and reputational risk.",
+        "likelihood": "High",
+        "timeframe": "Ongoing",
+        "lastUpdated": "2025-11-25"
+      }
+    ]
   },
   {
-    id: "geopolitical",
-    name: "Geopolitical",
-    icon: "Globe",
-    dataSources: [
-      { name: "World Bank Data", url: "https://data.worldbank.org/" },
-      { name: "Political Risk Map", url: "https://www.marsh.com/us/services/political-risk.html" },
-      { name: "Crisis Group", url: "https://www.crisisgroup.org/" },
+    "id": "geopolitical",
+    "name": "Geopolitical",
+    "icon": "Globe",
+    "dataSources": [
+      { "name": "Reuters", "url": "https://www.reuters.com/" },
+      { "name": "Al Jazeera", "url": "https://www.aljazeera.com/" },
+      { "name": "Crisis Group", "url": "https://www.crisisgroup.org/" }
     ],
-    risks: [
+    "risks": [
       {
-        id: "GEO-101",
-        title: "Border Tension",
-        score: 68,
-        severity: "Medium-High",
-        description: "Military activity uptick.",
-        category: "geopolitical",
-        detailedDescription: "Escalating military activities in key operational regions pose risks to supply chain stability and personnel safety. Increased border patrols, airspace restrictions, and maritime tensions may disrupt logistics networks. Regional partners have reported delays in customs clearance and heightened security screening procedures.",
-        recommendedActions: [
-          "Diversify supplier base across multiple geographic regions",
-          "Establish alternative logistics routes and contingency plans",
-          "Monitor real-time geopolitical intelligence feeds",
-          "Review travel policies and employee safety protocols",
-          "Increase safety stock levels for critical components"
+        "id": "GEO-101",
+        "title": "Red Sea Security Tension Causing Route Avoidance",
+        "score": 90,
+        "severity": "High",
+        "description": "Naval incidents and militant attacks have previously forced carriers to reroute; ongoing instability creates shipping unpredictability.",
+        "category": "geopolitical",
+        "detailedDescription": "Recent maritime security incidents in the Red Sea/Bab al-Mandab corridor have prompted major carriers to reroute vessels or temporarily pause transits, extending lead times and raising freight premiums. This directly affects MEA inbound schedules and inventory planning for distributors.",
+        "recommendedActions": [
+          "Activate alternative routing playbook (Cape of Good Hope options)",
+          "Communicate revised ETAs to regional warehouses and partners",
+          "Prioritize critical SKUs for air-lift where economically justified"
         ],
-        relatedRisks: ["SC-301", "GEO-102"],
-        impact: "High - Supply chain disruption and operational delays",
-        likelihood: "Medium - Situation remains fluid",
-        timeframe: "Medium-term - 90-180 days",
-        lastUpdated: "2025-11-22"
+        "relatedRisks": ["SC-PoC-001", "SC-PoC-003"],
+        "impact": "High – Multi-day to multi-week delays, higher costs.",
+        "likelihood": "High",
+        "timeframe": "Immediate",
+        "lastUpdated": "2025-11-25"
       },
       {
-        id: "GEO-102",
-        title: "Sanctions Exposure",
-        score: 54,
-        severity: "Medium",
-        description: "Dependency on restricted-region suppliers.",
-        category: "geopolitical",
-        detailedDescription: "Current supply chain analysis reveals dependencies on suppliers in regions subject to international sanctions. Changes in sanctions regimes could result in immediate loss of critical suppliers, requiring rapid sourcing alternatives. Compliance risks exist for transactions involving sanctioned entities.",
-        recommendedActions: [
-          "Conduct comprehensive supply chain mapping and sanctions screening",
-          "Identify and qualify alternative suppliers in compliant regions",
-          "Implement sanctions compliance monitoring systems",
-          "Review contract terms for force majeure provisions",
-          "Engage legal counsel for sanctions compliance advisory"
+        "id": "GEO-102",
+        "title": "Regional Trade Policy Change / Tariff Risk",
+        "score": 60,
+        "severity": "Medium-High",
+        "description": "Sudden regulatory or tariff shifts in target markets can affect landed costs and customs clearance.",
+        "category": "geopolitical",
+        "detailedDescription": "Government policy shifts—tariffs, import verification, or sudden certification requirements—are being reported across African and Middle East jurisdictions. These changes may require contract updates, reclassification of HS codes, and lead to customs holdups.",
+        "recommendedActions": [
+          "Monitor regulatory feeds and pre-validate HS codes",
+          "Engage customs brokers for accelerated clearances",
+          "Keep legal/compliance on standby for contract updates"
         ],
-        relatedRisks: ["SC-301", "FIN-401"],
-        impact: "Medium-High - Regulatory penalties and sourcing disruption",
-        likelihood: "Medium - Policy changes possible",
-        timeframe: "Near-term - Within 60 days",
-        lastUpdated: "2025-11-21"
+        "relatedRisks": ["SC-PoC-005", "FIN-401"],
+        "impact": "Medium-High – Increased compliance cost and clearance delays.",
+        "likelihood": "Medium",
+        "timeframe": "Near-term",
+        "lastUpdated": "2025-11-24"
       },
-    ],
+      {
+        "id": "GEO-103",
+        "title": "Sanctions / Export Control Exposure",
+        "score": 55,
+        "severity": "Medium",
+        "description": "Dependency on suppliers or routes subject to export controls could create compliance and sourcing issues.",
+        "category": "geopolitical",
+        "detailedDescription": "Shifts in international sanctions or export control regimes can abruptly remove suppliers or shipping options from the supply chain, requiring rapid substitution and compliance checks.",
+        "recommendedActions": [
+          "Run sanctions screening on supplier list",
+          "Map alternate compliant suppliers",
+          "Add sanctions clauses to vendor contracts"
+        ],
+        "relatedRisks": ["FIN-401", "SC-PoC-008"],
+        "impact": "Medium – Potential supplier loss and legal exposure.",
+        "likelihood": "Medium",
+        "timeframe": "60–120 days",
+        "lastUpdated": "2025-11-22"
+      }
+    ]
   },
   {
-    id: "supply-chain",
-    name: "Supply Chain",
-    icon: "Truck",
-    dataSources: [
-      { name: "Resilinc EventWatch", url: "https://www.resilinc.com/" },
-      { name: "Supply Chain Dive", url: "https://www.supplychaindive.com/" },
-      { name: "Freightos Baltic Index", url: "https://fbx.freightos.com/" },
+    "id": "supply-chain",
+    "name": "Supply Chain & Logistics",
+    "icon": "Truck",
+    "dataSources": [
+      { "name": "Reuters Maritime", "url": "https://www.reuters.com/world/middle-east/" },
+      { "name": "TradeArabia Logistics", "url": "https://www.tradearabia.com/rss/TRA-logistics.xml" },
+      { "name": "Al Jazeera Middle East", "url": "https://www.aljazeera.com/xml/rss/all.xml" },
+      { "name": "BBC Africa", "url": "https://feeds.bbci.co.uk/news/world/africa/rss.xml" },
+      { "name": "Google News - Red Sea", "url": "https://news.google.com/rss/search?q=red+sea+shipping+disruption" }
     ],
-    risks: [
+    "risks": [
       {
-        id: "SC-301",
-        title: "Vendor Delivery Delays",
-        score: 48,
-        severity: "Medium-Low",
-        description: "Delays in Tier-2 suppliers.",
-        category: "supply-chain",
-        detailedDescription: "Secondary suppliers are experiencing production delays due to labor shortages and raw material constraints. Average lead times have increased by 15-20% over the past quarter. While Tier-1 suppliers maintain buffer inventory, prolonged Tier-2 delays could cascade through the supply chain.",
-        recommendedActions: [
-          "Increase communication frequency with Tier-2 suppliers",
-          "Negotiate buffer stock agreements with key suppliers",
-          "Evaluate dual-sourcing options for critical components",
-          "Implement supplier performance scorecards and early warning metrics",
-          "Consider strategic inventory positioning closer to production facilities"
+        "id": "SC-PoC-001",
+        "title": "Red Sea Shipping Rerouting Causing 10–20 Day Delays",
+        "score": 92,
+        "severity": "High",
+        "description": "Global carriers reroute via Cape of Good Hope due to Red Sea security risks.",
+        "category": "supply-chain",
+        "detailedDescription": "Multiple carriers announced route diversions and temporary pauses for Red Sea transits following security incidents; rerouting adds 10–20 days on typical MEA inbound journeys and creates schedule volatility for inventory replenishment.",
+        "recommendedActions": [
+          "Increase buffer stock levels for high-velocity SKUs",
+          "Identify alternate ports of entry (Salalah, Sohar, Djibouti)",
+          "Engage freight forwarders for priority booking",
+          "Notify partners of revised lead-time expectations"
         ],
-        relatedRisks: ["SC-302", "GEO-101"],
-        impact: "Medium - Production delays and inventory shortages",
-        likelihood: "Medium - Industry-wide supply constraints",
-        timeframe: "Near-term - 60-90 days",
-        lastUpdated: "2025-11-20"
+        "relatedRisks": ["SC-PoC-002", "SC-PoC-003"],
+        "impact": "High – Disrupted inbound flow; stockouts possible.",
+        "likelihood": "High",
+        "timeframe": "Immediate",
+        "lastUpdated": "2025-11-25"
       },
       {
-        id: "SC-302",
-        title: "Logistics Bottleneck",
-        score: 39,
-        severity: "Low",
-        description: "Port clearing improving.",
-        category: "supply-chain",
-        detailedDescription: "Port congestion metrics show improvement with clearing times returning to near-normal levels. However, capacity constraints remain in certain key shipping lanes. Container availability has stabilized, though rates remain elevated compared to pre-disruption baselines.",
-        recommendedActions: [
-          "Continue monitoring port performance metrics and shipping schedules",
-          "Maintain relationships with multiple freight forwarders",
-          "Lock in favorable shipping contracts during current improvement window",
-          "Review inventory strategies to reduce dependency on just-in-time delivery",
-          "Consider nearshoring options for time-sensitive components"
+        "id": "SC-PoC-002",
+        "title": "Jebel Ali Port Congestion Increasing Container Dwell Times",
+        "score": 84,
+        "severity": "High",
+        "description": "Congestion and rollover events reported at Jebel Ali terminal.",
+        "category": "supply-chain",
+        "detailedDescription": "Regional logistics reports indicate yard space constraints and vessel bunching at Jebel Ali, increasing container dwell time and demurrage exposure for goods destined to UAE distribution hubs.",
+        "recommendedActions": [
+          "Pre-advise shipping lines to minimize container rollover",
+          "Use alternate free zones temporarily",
+          "Prioritize customs documentation accuracy",
+          "Evaluate unloading via Port Khalifa as fallback"
         ],
-        relatedRisks: ["SC-301", "FIN-401"],
-        impact: "Low-Medium - Moderate shipping delays and cost increases",
-        likelihood: "Low - Situation improving",
-        timeframe: "Stable - Monitoring phase",
-        lastUpdated: "2025-11-19"
+        "relatedRisks": ["SC-PoC-001"],
+        "impact": "High – Slower inbound processing and higher demurrage.",
+        "likelihood": "Medium-High",
+        "timeframe": "30–45 days",
+        "lastUpdated": "2025-11-27"
       },
-    ],
+      {
+        "id": "SC-PoC-003",
+        "title": "Freight Rate Surge on Asia → Middle East Routes",
+        "score": 77,
+        "severity": "Medium-High",
+        "description": "Container prices increasing due to rerouting and capacity shifts.",
+        "category": "supply-chain",
+        "detailedDescription": "Market indexes and carrier notices show surcharges and war-risk premiums on Asia→GCC lanes. This inflates landed costs and reduces margin on thin-margin SKUs.",
+        "recommendedActions": [
+          "Renegotiate rate contracts for next quarter",
+          "Consider partial air freight for priority SKUs",
+          "Pass temporary surcharges to channel partners where contractually possible"
+        ],
+        "relatedRisks": ["SC-PoC-001"],
+        "impact": "Medium-High – Cost inflation and margin pressure.",
+        "likelihood": "High",
+        "timeframe": "Current quarter",
+        "lastUpdated": "2025-11-27"
+      },
+      {
+        "id": "SC-PoC-004",
+        "title": "East Africa Currency Instability Impacting Import Viability",
+        "score": 71,
+        "severity": "Medium-High",
+        "description": "Volatility in local currencies increases partner credit risk.",
+        "category": "supply-chain",
+        "detailedDescription": "Rapid depreciation in currencies like the Kenyan Shilling and Naira can reduce purchasing power of distributors and raise default risk, affecting order flows and receivables for Redington in African markets.",
+        "recommendedActions": [
+          "Tighten credit controls and prepayment for high-risk accounts",
+          "Work with local finance teams on FX hedging options",
+          "Monitor partner liquidity metrics closely"
+        ],
+        "relatedRisks": ["FIN-401"],
+        "impact": "Medium-High – Reduced order volume and payment delays.",
+        "likelihood": "High",
+        "timeframe": "30–90 days",
+        "lastUpdated": "2025-11-27"
+      },
+      {
+        "id": "SC-PoC-005",
+        "title": "Import Verification Rules Delaying Electronics Clearance in Kenya",
+        "score": 66,
+        "severity": "Medium-High",
+        "description": "Enhanced customs verification and documentation requirements slow clearance.",
+        "category": "supply-chain",
+        "detailedDescription": "Regulatory updates increase inspection rates and documentation checks for electronics imports, causing multi-day delays on selected SKUs unless pre-cleared or pre-documented.",
+        "recommendedActions": [
+          "Pre-validate HS codes and compliance documents for shipments",
+          "Work with customs brokers to secure priority clearance",
+          "Engage suppliers to provide consolidated documentation"
+        ],
+        "relatedRisks": ["SC-PoC-004"],
+        "impact": "Medium – Delays at port and inventory disruptions.",
+        "likelihood": "Medium-High",
+        "timeframe": "Ongoing",
+        "lastUpdated": "2025-11-27"
+      },
+      {
+        "id": "SC-PoC-006",
+        "title": "Severe Weather Disrupting Arabian Sea Shipping Routes",
+        "score": 58,
+        "severity": "Medium",
+        "description": "Storms and cyclonic conditions force schedule adjustments.",
+        "category": "supply-chain",
+        "detailedDescription": "Seasonal storms in the Arabian Sea and adjacent lanes create temporary schedule unreliability and occasional rerouting that increases transit times for India→GCC shipments.",
+        "recommendedActions": [
+          "Track weather advisories for impacted routes",
+          "Stagger shipments and increase buffers during storm windows",
+          "Split shipments sea/air where necessary for critical lines"
+        ],
+        "relatedRisks": ["SC-PoC-001"],
+        "impact": "Medium – Short-term delays for affected consignments.",
+        "likelihood": "Medium",
+        "timeframe": "2–4 weeks",
+        "lastUpdated": "2025-11-27"
+      },
+      {
+        "id": "SC-PoC-007",
+        "title": "Port Worker Strikes Affecting East African Gateways",
+        "score": 52,
+        "severity": "Medium",
+        "description": "Labor unrest at Mombasa and regional ports causes unloading slowdowns.",
+        "category": "supply-chain",
+        "detailedDescription": "Intermittent strikes and industrial actions at East African ports create temporary backlogs and slower customs processing, directly affecting in-country replenishment cycles for distributors.",
+        "recommendedActions": [
+          "Identify inland depot alternatives",
+          "Adjust ETAs and inform sales teams",
+          "Plan staggered imports to reduce spike vulnerability"
+        ],
+        "relatedRisks": ["SC-PoC-004"],
+        "impact": "Medium – Slower replenishment and possible stockouts.",
+        "likelihood": "Medium",
+        "timeframe": "Near-term",
+        "lastUpdated": "2025-11-27"
+      },
+      {
+        "id": "SC-PoC-008",
+        "title": "Semiconductor Lead-Time Extension Affecting Device Availability",
+        "score": 47,
+        "severity": "Medium",
+        "description": "Lead times for certain chips lengthen, increasing risk for laptop and networking device supply.",
+        "category": "supply-chain",
+        "detailedDescription": "OEM reports and industry trackers indicate extended lead times for selected semiconductor families, which may delay assembly or hamper availability of certain laptop and networking SKUs.",
+        "recommendedActions": [
+          "Place forecasts and POs earlier for impacted SKUs",
+          "Build alternative supplier lists",
+          "Consider inventory buffering for high-demand models"
+        ],
+        "relatedRisks": ["CYB-002"],
+        "impact": "Medium – Product availability pressure and delayed fulfilment.",
+        "likelihood": "Medium",
+        "timeframe": "Next quarter",
+        "lastUpdated": "2025-11-27"
+      }
+    ]
   },
   {
-    id: "financial",
-    name: "Financial",
-    icon: "DollarSign",
-    dataSources: [
-      { name: "Bloomberg Terminal", url: "https://www.bloomberg.com/professional/solution/bloomberg-terminal/" },
-      { name: "S&P Global Market Intelligence", url: "https://www.spglobal.com/marketintelligence/" },
-      { name: "Moody's Analytics", url: "https://www.moodysanalytics.com/" },
+    "id": "financial",
+    "name": "Financial",
+    "icon": "DollarSign",
+    "dataSources": [
+      { "name": "Reuters Business", "url": "https://www.reuters.com/finance" },
+      { "name": "FXStreet", "url": "https://www.fxstreet.com/" },
+      { "name": "Business Daily Africa", "url": "https://www.businessdailyafrica.com/" }
     ],
-    risks: [
+    "risks": [
       {
-        id: "FIN-401",
-        title: "FX Volatility",
-        score: 57,
-        severity: "Medium",
-        description: "Currency fluctuations in key markets.",
-        category: "financial",
-        detailedDescription: "Foreign exchange volatility in key operating markets is creating margin pressure and forecasting uncertainty. Currency movements have exceeded historical volatility ranges, particularly in emerging markets where significant operations are located. Unhedged exposure could result in material P&L impacts.",
-        recommendedActions: [
-          "Implement comprehensive FX hedging strategy for material exposures",
-          "Review pricing mechanisms to include currency adjustment clauses",
-          "Centralize treasury operations for better visibility and control",
-          "Conduct monthly FX exposure analysis and stress testing",
-          "Consider natural hedging through local currency operations"
+        "id": "FIN-401",
+        "title": "FX Volatility in African Markets",
+        "score": 74,
+        "severity": "Medium-High",
+        "description": "Sharp currency movements create margin and receivables risk.",
+        "category": "financial",
+        "detailedDescription": "Local currency depreciation in key African markets (Kenya, Nigeria) increases cost pressures and exposes Redington to receivables risk and margin compression when prices are set in foreign currency.",
+        "recommendedActions": [
+          "Hedge key exposures where cost-effective",
+          "Introduce currency-adjusted pricing for local contracts",
+          "Monitor receivables and tighten credit for at-risk accounts"
         ],
-        relatedRisks: ["GEO-102", "SC-302"],
-        impact: "Medium - Margin compression and earnings volatility",
-        likelihood: "High - Ongoing market volatility",
-        timeframe: "Immediate - Active exposure",
-        lastUpdated: "2025-11-24"
+        "relatedRisks": ["SC-PoC-004"],
+        "impact": "Medium-High – Margin erosion and collection risk.",
+        "likelihood": "High",
+        "timeframe": "Immediate to 90 days",
+        "lastUpdated": "2025-11-27"
       },
       {
-        id: "FIN-402",
-        title: "Credit Exposure",
-        score: 45,
-        severity: "Medium-Low",
-        description: "Higher receivable days.",
-        category: "financial",
-        detailedDescription: "Days sales outstanding (DSO) have increased by 12% over the past quarter as certain customer segments extend payment terms. While within acceptable ranges, this trend impacts working capital and increases credit risk exposure. Some customers in stressed industries show early warning signs of financial distress.",
-        recommendedActions: [
-          "Enhance customer credit monitoring and early warning systems",
-          "Implement more aggressive collections procedures for aged receivables",
-          "Review and tighten credit terms for high-risk customer segments",
-          "Consider receivables financing or factoring for working capital optimization",
-          "Establish credit insurance for large exposures"
+        "id": "FIN-402",
+        "title": "Credit Exposure from Distributor Partners",
+        "score": 56,
+        "severity": "Medium",
+        "description": "DSO increasing and partner liquidity strain observed.",
+        "category": "financial",
+        "detailedDescription": "Extended payment cycles and elevated receivable days in certain markets point to growing credit exposure, especially in markets experiencing macro stress.",
+        "recommendedActions": [
+          "Tighten credit acceptances and increase monitoring",
+          "Use credit insurance or factoring for select partners",
+          "Apply stricter payment terms for higher-risk geographies"
         ],
-        relatedRisks: ["CYB-003", "OPS-502"],
-        impact: "Medium-Low - Working capital pressure and potential bad debts",
-        likelihood: "Medium - Economic uncertainty affecting customers",
-        timeframe: "Near-term - 60-90 days",
-        lastUpdated: "2025-11-23"
+        "relatedRisks": ["SC-PoC-004"],
+        "impact": "Medium – Working capital pressure.",
+        "likelihood": "Medium",
+        "timeframe": "30–90 days",
+        "lastUpdated": "2025-11-24"
       },
-    ],
+      {
+        "id": "FIN-403",
+        "title": "Rising Logistics Costs Impacting Gross Margins",
+        "score": 61,
+        "severity": "Medium-High",
+        "description": "Freight and surcharge increases reducing net margins on international shipments.",
+        "category": "financial",
+        "detailedDescription": "Surcharges and increased freight rates across certain lanes are directly increasing landed cost on distributed goods, squeezing margins on thin-ticket lines unless pricing is adjusted.",
+        "recommendedActions": [
+          "Review commercial terms and introduce fuel/surcharge clauses",
+          "Run product-by-product margin re-assessment",
+          "Negotiate long-term rates where volume supports"
+        ],
+        "relatedRisks": ["SC-PoC-003"],
+        "impact": "Medium-High – Profitability pressure.",
+        "likelihood": "High",
+        "timeframe": "Current quarter",
+        "lastUpdated": "2025-11-27"
+      }
+    ]
   },
   {
-    id: "operational",
-    name: "Operational",
-    icon: "Settings",
-    dataSources: [
-      { name: "ISO Standards", url: "https://www.iso.org/" },
-      { name: "Operational Risk Data Exchange", url: "https://www.oric-int.org/" },
-      { name: "ERM Framework", url: "https://www.coso.org/guidance-erm" },
+    "id": "operational",
+    "name": "Operational",
+    "icon": "Settings",
+    "dataSources": [
+      { "name": "BBC Business", "url": "https://feeds.bbci.co.uk/news/business/rss.xml" },
+      { "name": "Safety4Sea", "url": "https://safety4sea.com/feed/" },
+      { "name": "Local Port Notices (scraped) ", "url": "https://www.iss-shipping.com/latest-news/" }
     ],
-    risks: [
+    "risks": [
       {
-        id: "OPS-501",
-        title: "Resource Shortage",
-        score: 50,
-        severity: "Medium",
-        description: "Temporary staffing gaps.",
-        category: "operational",
-        detailedDescription: "Ongoing challenges in recruiting and retaining skilled technical staff have created temporary capability gaps in critical functions. Attrition rates in specialized roles are above target, and time-to-fill positions has extended. This impacts project delivery timelines and increases dependency on key individuals.",
-        recommendedActions: [
-          "Accelerate recruiting efforts with enhanced employer branding",
-          "Implement succession planning for critical roles",
-          "Develop knowledge transfer and cross-training programs",
-          "Review compensation packages to ensure market competitiveness",
-          "Consider contract resources or managed services for short-term gaps"
+        "id": "OPS-501",
+        "title": "Resource Shortages & Staffing Gaps in Key Hubs",
+        "score": 58,
+        "severity": "Medium",
+        "description": "Temporary staffing shortages in warehouses and logistics partners affecting throughput.",
+        "category": "operational",
+        "detailedDescription": "Recruitment and retention pressures among logistics partners and local warehouses cause intermittent throughput drops and slower order turnarounds in key hubs (UAE, Kenya).",
+        "recommendedActions": [
+          "Establish contingency staffing contracts",
+          "Cross-train warehouse teams for surge periods",
+          "Deploy temporary staffing via trusted vendors when needed"
         ],
-        relatedRisks: ["CYB-002", "OPS-502"],
-        impact: "Medium - Project delays and knowledge concentration risks",
-        likelihood: "Medium - Tight labor market conditions",
-        timeframe: "Near-term - 90 days",
-        lastUpdated: "2025-11-22"
+        "relatedRisks": ["SC-PoC-002"],
+        "impact": "Medium – Slower fulfilment and potential service-level misses.",
+        "likelihood": "Medium",
+        "timeframe": "30–90 days",
+        "lastUpdated": "2025-11-26"
       },
       {
-        id: "OPS-502",
-        title: "Process Compliance",
-        score: 35,
-        severity: "Low",
-        description: "Compliance metrics stable.",
-        category: "operational",
-        detailedDescription: "Process compliance indicators remain within acceptable ranges across all monitored areas. Internal audits show consistent adherence to established procedures, and control effectiveness testing demonstrates adequate design and operation. Minor findings from recent audits have been addressed.",
-        recommendedActions: [
-          "Continue regular compliance monitoring and reporting",
-          "Maintain training programs for process updates and changes",
-          "Schedule periodic process reviews for optimization opportunities",
-          "Document and share best practices across business units",
-          "Plan for upcoming regulatory changes proactively"
+        "id": "OPS-502",
+        "title": "Process & Documentation Errors Causing Customs Holds",
+        "score": 46,
+        "severity": "Medium-Low",
+        "description": "Incorrect HS codes or missing documentation triggering customs holds.",
+        "category": "operational",
+        "detailedDescription": "Operational errors in export documentation or mis-declared HS codes result in Customs holding shipments for inspection, delaying clearance and increasing rework costs.",
+        "recommendedActions": [
+          "Standardize document checklists for key SKU families",
+          "Train commercial teams on HS code mapping",
+          "Implement automated document validation prior to shipment"
         ],
-        relatedRisks: ["FIN-402", "OPS-501"],
-        impact: "Low - Well-controlled operational processes",
-        likelihood: "Low - Strong compliance culture",
-        timeframe: "Stable - Business as usual",
-        lastUpdated: "2025-11-21"
+        "relatedRisks": ["SC-PoC-005"],
+        "impact": "Medium-Low – Tactical delays and rework costs.",
+        "likelihood": "Medium",
+        "timeframe": "Ongoing",
+        "lastUpdated": "2025-11-23"
       },
-    ],
-  },
+      {
+        "id": "OPS-503",
+        "title": "Third-Party Logistics (3PL) Capacity Shortages",
+        "score": 50,
+        "severity": "Medium",
+        "description": "3PL partners reporting limited capacity during peak rerouting periods.",
+        "category": "operational",
+        "detailedDescription": "Capacity constraints among 3PLs caused by rerouting and surge demand reduce flexibility for urgent shipments and hamper contingency fulfilment plans.",
+        "recommendedActions": [
+          "Pre-contract capacity with 2+ 3PLs per region",
+          "Implement priority allocation for critical SKUs",
+          "Monitor 3PL performance metrics weekly"
+        ],
+        "relatedRisks": ["SC-PoC-001", "SC-PoC-003"],
+        "impact": "Medium – Reduced contingency options for urgent orders.",
+        "likelihood": "Medium",
+        "timeframe": "Near-term",
+        "lastUpdated": "2025-11-24"
+      }
+    ]
+  }
 ];
 
 export const getSeverityFromScore = (score: number): RiskItem["severity"] => {
