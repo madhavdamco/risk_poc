@@ -172,11 +172,10 @@ export const riskCategories: RiskCategory[] = [
     "name": "Supply Chain & Logistics",
     "icon": "Truck",
     "dataSources": [
-      { "name": "Reuters Maritime", "url": "https://www.reuters.com/world/middle-east/" },
-      { "name": "TradeArabia Logistics", "url": "https://www.tradearabia.com/rss/TRA-logistics.xml" },
-      { "name": "Al Jazeera Middle East", "url": "https://www.aljazeera.com/xml/rss/all.xml" },
-      { "name": "BBC Africa", "url": "https://feeds.bbci.co.uk/news/world/africa/rss.xml" },
-      { "name": "Google News - Red Sea", "url": "https://news.google.com/rss/search?q=red+sea+shipping+disruption" }
+      { "name": "Reuters Middle East", "url": "https://www.reuters.com/world/middle-east/" },
+      { "name": "Reuters Africa", "url": "https://www.reuters.com/world/africa/" },
+      { "name": "Maritime Executive", "url": "https://maritime-executive.com/" },
+      { "name": "Google News – Red Sea Shipping", "url": "https://news.google.com/search?q=Red+Sea+shipping+disruption" }
     ],
     "risks": [
       {
